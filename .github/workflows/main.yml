@@ -2,8 +2,8 @@ name: Daily PTF Data Update
 
 on:
   schedule:
-    - cron: '0 14 * * *'
-  workflow_dispatch:
+    - cron: '30 9 * * *'  # Her gün UTC 09:30'da çalışır (TSİ 12:30)
+  workflow_dispatch:  # Manuel çalıştırma için
 
 jobs:
   update-data:
@@ -28,13 +28,4 @@ jobs:
         SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         EPIAS_USERNAME: ${{ secrets.EPIAS_USERNAME }}
         EPIAS_PASSWORD: ${{ secrets.EPIAS_PASSWORD }}
-      run: |
-        python -c "
-        import os
-        print('Environment variables:')
-        print('SUPABASE_URL exists:', bool(os.getenv('SUPABASE_URL')))
-        print('SUPABASE_KEY exists:', bool(os.getenv('SUPABASE_KEY')))
-        print('EPIAS_USERNAME exists:', bool(os.getenv('EPIAS_USERNAME')))
-        print('EPIAS_PASSWORD exists:', bool(os.getenv('EPIAS_PASSWORD')))
-        "
-        python update_next_day.py
+      run: python update_next_day.py
