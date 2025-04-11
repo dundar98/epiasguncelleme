@@ -2,7 +2,7 @@ name: Daily PTF Data Update
 
 on:
   schedule:
-    - cron: '30 9 * * *'  # Her gün UTC 09:30'da çalışır (TSİ 12:30)
+    - cron: '30 11 * * *'  # Her gün UTC 09:30'da çalışır (TSİ 12:30)
   workflow_dispatch:  # Manuel çalıştırma için
 
 jobs:
