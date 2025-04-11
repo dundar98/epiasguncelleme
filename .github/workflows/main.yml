@@ -2,19 +2,14 @@ name: Daily PTF Data Update
 
 on:
   schedule:
-    - cron: '30 9 * * *'  # Her gün saat 14:00 UTC'de çalışır (TSİ 17:00)
-  workflow_dispatch:  # Manuel tetikleme için
+    - cron: '30 9 * * *'
+  workflow_dispatch:
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
+    permissions: write-all
     
-    env:
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-      EPIAS_USERNAME: ${{ secrets.EPIAS_USERNAME }}
-      EPIAS_PASSWORD: ${{ secrets.EPIAS_PASSWORD }}
-
     steps:
     - uses: actions/checkout@v3
     
@@ -29,4 +24,9 @@ jobs:
         pip install -r requirements.txt
         
     - name: Run update script
+      env:
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        EPIAS_USERNAME: ${{ secrets.EPIAS_USERNAME }}
+        EPIAS_PASSWORD: ${{ secrets.EPIAS_PASSWORD }}
       run: python update_next_day.py
